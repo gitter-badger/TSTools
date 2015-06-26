@@ -178,7 +178,7 @@ class YATSM_LIVE(timeseries_ccdc.CCDCTimeSeries):
                                {'x': self.ord_dates,
                                 'sensor': self.sensor,
                                 'pr': self.pathrow})
-        self.design_info = self.X.design_info
+        self.design_info = self.X.design_info.column_name_indexes
 
         # Get Y
         self.Y = self.get_data(mask=False)
@@ -282,8 +282,8 @@ class YATSM_LIVE(timeseries_ccdc.CCDCTimeSeries):
 
         # Set model specification from file
         if 'design' in z.files and 'design_matrix' in z.files:
-            self.design = z['design']
-            self.design_info = z['design_matrix']
+            self.design = z['design'].item()
+            self.design_info = z['design_matrix'].item()
 
     def get_prediction(self, band, usermx=None):
         """ Return the time series model fit predictions for any single pixel
@@ -307,7 +307,7 @@ class YATSM_LIVE(timeseries_ccdc.CCDCTimeSeries):
 
         design = re.sub(r'[\+\-][\ ]+C\(.*\)', '', self.design)
         coef_columns = []
-        for k, v in self.design_info.column_name_indexes.iteritems():
+        for k, v in self.design_info.iteritems():
             if not re.match('C\(.*\)', k):
                 coef_columns.append(v)
         coef_columns = np.asarray(coef_columns)
