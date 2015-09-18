@@ -296,6 +296,24 @@ class YATSMTimeSeries(timeseries_stacked.StackedTimeSeries):
 
         return rx, ry
 
+    def get_plot(self, series, band, axis, desc):
+        """ Plot some information on an axis for a plot of some description
+
+        Args:
+          series (int): index of Series for residuals
+          band (int): index of band to return
+          axis (matplotlib.axes._subplots.Axes): a matplotlib axis to plot on
+          desc (str): description of plot, usually a plot class from
+            `tstools.plots`
+
+        """
+        if desc == 'TSPlot':
+            # TODO: actually plot something useful
+            axis.text(0.5, 0.5,
+                      '%.3f' % self.yatsm_model.record[0]['rmse'][band],
+                      horizontalalignment='center',
+                      transform=axis.transAxes)
+
 # RESULTS HELPER METHODS
     def _fetch_results_saved(self):
         """ Read YATSM results and return """
