@@ -221,9 +221,12 @@ class AbstractTimeSeriesDriver(object):
           desc (str): description of plot, usually a plot class from
             `tstools.plots`
 
+        Returns:
+          iterable: list of artists to include in legend
+
         """
         # Do nothing by default, but don't require subclass to implement method
-        pass
+        return None
 
 
 
